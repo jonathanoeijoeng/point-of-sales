@@ -96,6 +96,7 @@
 </template>
 
 <script setup>
+import { onBeforeUnmount } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import dayjs from "dayjs";
@@ -119,4 +120,8 @@ const done = (order) => {
 const interval = setTimeout(function () {
     Inertia.get(route("kitchen"));
 }, 5000);
+
+onBeforeUnmount(() => {
+    clearTimeout(interval);
+});
 </script>
