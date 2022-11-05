@@ -1,0 +1,1 @@
+.list-enter-active,.list-leave-active{transition:all 1s ease}.list-enter-from,.list-leave-to{opacity:0;transform:translate(30px)}.leave-enter-active,.leave-leave-active{transform-origin:50% 50%;transition:transform .5s cubic-bezier(.61,1,.88,1);transition-property:transform,opacity}.leave-enter,.leave-leave-to{transform:scale(0) rotate(-60deg)}
