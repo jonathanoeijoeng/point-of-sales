@@ -1,0 +1,37 @@
+[
+    {
+        "id": 1,
+        "name": "Signature",
+        "photo": "signature.svg",
+        "created_at": "2022-10-18 11:43:10",
+        "updated_at": "2022-10-18 11:43:10"
+    },
+    {
+        "id": 2,
+        "name": "Croissant",
+        "photo": "croissant.svg",
+        "created_at": "2022-10-18 11:43:10",
+        "updated_at": "2022-10-18 11:43:10"
+    },
+    {
+        "id": 3,
+        "name": "Coffee",
+        "photo": "coffee.svg",
+        "created_at": "2022-10-18 11:43:10",
+        "updated_at": "2022-10-18 11:43:10"
+    },
+    {
+        "id": 4,
+        "name": "Pancake",
+        "photo": "pancake.svg",
+        "created_at": "2022-10-18 11:43:10",
+        "updated_at": "2022-10-18 11:43:10"
+    },
+    {
+        "id": 5,
+        "name": "Ice Cream",
+        "photo": "ice-cream.svg",
+        "created_at": "2022-10-18 11:43:10",
+        "updated_at": "2022-10-18 11:43:10"
+    }
+]

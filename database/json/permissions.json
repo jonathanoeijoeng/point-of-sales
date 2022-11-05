@@ -1,0 +1,23 @@
+[
+    {
+        "id": 1,
+        "name": "view settings",
+        "guard_name": "web",
+        "created_at": "2022-10-25 16:56:46",
+        "updated_at": "2022-10-25 16:56:46"
+    },
+    {
+        "id": 2,
+        "name": "view dashboard",
+        "guard_name": "web",
+        "created_at": "2022-10-25 16:57:44",
+        "updated_at": "2022-10-25 16:57:44"
+    },
+    {
+        "id": 3,
+        "name": "view kitchen",
+        "guard_name": "web",
+        "created_at": "2022-10-25 16:57:44",
+        "updated_at": "2022-10-25 16:57:44"
+    }
+]
