@@ -73,6 +73,15 @@
                                 <GreenButton
                                     class="text-sm"
                                     @click="done(order)"
+                                    v-if="order.time_processed"
+                                >
+                                    Done
+                                </GreenButton>
+                                <GreenButton
+                                    class="text-sm"
+                                    @click="done(order)"
+                                    v-else
+                                    disabled
                                 >
                                     Done
                                 </GreenButton>
@@ -103,7 +112,6 @@ import dayjs from "dayjs";
 import GreenButton from "@/Components/GreenButton.vue";
 import CheckoutButton from "@/Components/CheckoutButton.vue";
 import Pusher from "pusher-js";
-import Echo from "laravel-echo";
 
 const data = defineProps({
     orders: {
