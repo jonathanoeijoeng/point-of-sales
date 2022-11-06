@@ -114,7 +114,7 @@ onMounted(() => {
                     <div class="flex justify-between gap-6">
                         <div>
                             <p class="text-2xl font-bold">
-                                Welcome, {{ $page.props.user.name }}
+                                Hi, {{ $page.props.user.name }}
                             </p>
                             <p class="text-slate-500 text-sm mt-2">
                                 Today is

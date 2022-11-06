@@ -25,9 +25,9 @@
                         alt=""
                     />
                     <div class="flex flex-col col-span-3">
-                        <p class="font-bold text-lg leading-6 flex-1">
+                        <div class="font-bold text-lg leading-6">
                             {{ cart.food_detail.name }}
-                        </p>
+                        </div>
                         <div class="flex justify-between items-center mt-1">
                             <p class="text-orange-600 font-bold">
                                 IDR
