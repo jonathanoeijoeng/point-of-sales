@@ -182,7 +182,7 @@
                 <CheckoutButton
                     class="w-full mt-8"
                     @click="checkout"
-                    v-if="data.carts.length > 0 && all_sent_to_kitchen"
+                    v-if="data.carts.length > 0 && all_done"
                     >Checkout Now
                 </CheckoutButton>
                 <CheckoutButton disabled class="w-full mt-8" v-else
@@ -397,6 +397,16 @@ const all_sent_to_kitchen = computed(() => {
         }
     });
     return all_sent_to_kitchen;
+});
+
+const all_done = computed(() => {
+    let all_done = true;
+    data.carts.forEach((cart) => {
+        if (cart.is_done == false) {
+            all_done = false;
+        }
+    });
+    return all_done;
 });
 </script>
 
