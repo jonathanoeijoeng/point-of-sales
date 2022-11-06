@@ -1,5 +1,5 @@
 <template>
-    <div class="px-3">
+    <div class="px-3 mb-12">
         <p class="text-2xl font-bold">Current Order</p>
         <p class="text-xl text-slate-500 font-semibold">
             From Table "<span>{{ data.table_id }}</span
