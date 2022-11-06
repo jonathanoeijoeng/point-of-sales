@@ -28,7 +28,7 @@
                         <div class="font-bold text-lg leading-6">
                             {{ cart.food_detail.name }}
                         </div>
-                        <div class="flex justify-between items-center mt-1">
+                        <div class="flex justify-between items-center mt-3">
                             <p class="text-orange-600 font-bold">
                                 IDR
                                 {{ Number(cart.sub_total).toLocaleString() }}
