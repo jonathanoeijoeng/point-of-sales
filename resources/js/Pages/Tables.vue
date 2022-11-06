@@ -14,7 +14,7 @@
                         class="text-green-100 bg-green-600 text-center rounded-full shadow-2xl cursor-pointer px-8 py-12 hover:bg-green-700"
                         @click="order(table.id)"
                         :class="{
-                            'text-red-200 !bg-red-600 hover:bg-red-700':
+                            'text-red-200 bg-red-600 hover:bg-red-700':
                                 data.orders.includes(table.id),
                         }"
                         v-if="table.is_available == 1"
@@ -59,6 +59,6 @@ const order = (id) => {
 
 <style>
 .bg-red-600 {
-    background-color: #e53e3e;
+    background-color: #e53e3e !important;
 }
 </style>
