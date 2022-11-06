@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\OrderSent;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;

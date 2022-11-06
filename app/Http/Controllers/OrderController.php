@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use App\Models\Table;
 use App\Models\Category;
+use App\Events\OrderDone;
+use App\Events\OrderSent;
 use App\Models\FoodDetail;
 use Illuminate\Http\Request;
+use App\Events\OrderProcessed;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,7 +31,6 @@ class OrderController extends Controller
     public function order(Request $request)
     {
         // dd($request['table_id']);
-        // $quote = Http::get('https://api.quotable.io/random')->json()['content'];
         $foods = FoodDetail::query()
             ->when($request->filters['search'] ?? null, function ($query, $search) {
                 return $query->where('name', 'like', '%' . $search . '%');
@@ -163,6 +165,15 @@ class OrderController extends Controller
                 'time_sent_to_kitchen' => now(),
             ]);
         }
+
+        $orders = Cart::with('food_detail', 'table')
+            ->where('is_sent_to_kitchen', true)
+            ->where('is_checkout', false)
+            ->where('is_done', false)
+            ->orderBy('time_sent_to_kitchen')
+            ->get();
+
+        broadcast(new OrderSent($orders));
     }
 
     public function process(Request $request)
@@ -172,6 +183,8 @@ class OrderController extends Controller
             'is_processed' => true,
             'time_processed' => now(),
         ]);
+
+        broadcast(new OrderProcessed($cart));
 
         return redirect()->route('kitchen')->with([
             'flash' => [
@@ -190,6 +203,8 @@ class OrderController extends Controller
             'is_done' => true,
             'time_done' => now(),
         ]);
+
+        broadcast(new OrderDone($cart));
 
         return redirect()->route('kitchen')->with([
             'flash' => [

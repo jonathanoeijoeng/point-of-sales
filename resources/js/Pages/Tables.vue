@@ -56,3 +56,9 @@ const order = (id) => {
     });
 };
 </script>
+
+<style>
+.bg-red-600 {
+    background-color: #e53e3e;
+}
+</style>

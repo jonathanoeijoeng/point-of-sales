@@ -96,12 +96,14 @@
 </template>
 
 <script setup>
-import { onBeforeUnmount } from "vue";
+import { onBeforeUnmount, onMounted } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import dayjs from "dayjs";
 import GreenButton from "@/Components/GreenButton.vue";
 import CheckoutButton from "@/Components/CheckoutButton.vue";
+import Pusher from "pusher-js";
+import Echo from "laravel-echo";
 
 const data = defineProps({
     orders: {
@@ -117,11 +119,26 @@ const done = (order) => {
     Inertia.post(route("order.done", order));
 };
 
-const interval = setTimeout(function () {
-    Inertia.get(route("kitchen"));
-}, 5000);
+// const interval = setTimeout(function () {
+//     Inertia.get(route("kitchen"));
+// }, 5000);
 
-onBeforeUnmount(() => {
-    clearTimeout(interval);
+// onBeforeUnmount(() => {
+//     clearTimeout(interval);
+// });
+
+const refresh = () => {
+    Inertia.get(route("kitchen"));
+};
+
+onMounted(() => {
+    // Pusher.logToConsole = true;
+    const pusher = new Pusher("ff94d45ed44d71633a8d", {
+        cluster: "ap1",
+    });
+    const channel = pusher.subscribe("order-sent");
+    channel.bind("OrderSent", function (data) {
+        Inertia.get(route("kitchen"));
+    });
 });
 </script>

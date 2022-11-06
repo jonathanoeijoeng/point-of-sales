@@ -1,7 +1,6 @@
 <script setup>
-import { watch, reactive } from "vue";
+import { watch, reactive, onMounted, ref } from "vue";
 import { Inertia } from "@inertiajs/inertia";
-import { Link } from "@inertiajs/inertia-vue3";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import Order from "./Order/Order.vue";
 import Cart from "./Order/Cart.vue";
@@ -9,6 +8,7 @@ import TextInput from "@/Components/Textinput.vue";
 import route from "../../../vendor/tightenco/ziggy/src/js";
 import dayjs from "dayjs";
 import Swal from "sweetalert2";
+import Pusher from "pusher-js";
 
 const data = defineProps({
     foods: {
@@ -63,6 +63,47 @@ if (data.table_id == null) {
         }
     });
 }
+
+const table = ref(data.table_id);
+
+onMounted(() => {
+    // Pusher.logToConsole = true;
+    const pusher = new Pusher("ff94d45ed44d71633a8d", {
+        cluster: "ap1",
+    });
+    const channel = pusher.subscribe("order-processed");
+    channel.bind("OrderProcessed", function (data) {
+        Inertia.get(
+            route("order"),
+            {
+                table_id: table.value,
+            },
+            {
+                preserveState: true,
+                preserveScroll: true,
+                replace: true,
+            }
+        );
+    });
+
+    const pusher1 = new Pusher("ff94d45ed44d71633a8d", {
+        cluster: "ap1",
+    });
+    const channel1 = pusher1.subscribe("order-done");
+    channel1.bind("OrderDone", function (data) {
+        Inertia.get(
+            route("order"),
+            {
+                table_id: table.value,
+            },
+            {
+                preserveState: true,
+                preserveScroll: true,
+                replace: true,
+            }
+        );
+    });
+});
 </script>
 
 <template>
