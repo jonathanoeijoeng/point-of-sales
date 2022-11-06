@@ -1,10 +1,12 @@
 <template>
     <AppLayout title="Kitchen Order List">
-        <div class="px-12 py-12">
-            <h1 class="text-2xl font-bold uppercase tracking-wider">
+        <div class="mx-6 my-12 border border-slate-300 rounded-lg">
+            <div
+                class="text-xl p-4 font-bold uppercase tracking-wider bg-slate-300 rounded-t-lg"
+            >
                 Kitchen Order List
-            </h1>
-            <div class="mt-5">
+            </div>
+            <div>
                 <table
                     class="w-full text-left divide-y divide-slate-200 rounded-lg"
                 >
@@ -105,13 +107,14 @@
 </template>
 
 <script setup>
-import { onBeforeUnmount, onMounted } from "vue";
+import { onBeforeUnmount, onMounted, ref } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import dayjs from "dayjs";
 import GreenButton from "@/Components/GreenButton.vue";
 import CheckoutButton from "@/Components/CheckoutButton.vue";
 import Pusher from "pusher-js";
+import Checkbox from "@/Components/Checkbox.vue";
 
 const data = defineProps({
     orders: {
@@ -134,10 +137,6 @@ const done = (order) => {
 // onBeforeUnmount(() => {
 //     clearTimeout(interval);
 // });
-
-const refresh = () => {
-    Inertia.get(route("kitchen"));
-};
 
 onMounted(() => {
     // Pusher.logToConsole = true;

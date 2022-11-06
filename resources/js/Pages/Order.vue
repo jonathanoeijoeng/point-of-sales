@@ -109,7 +109,9 @@ onMounted(() => {
 <template>
     <AppLayout title="Order List">
         <div class="grid grid-cols-12 relative">
-            <div class="py-12 bg-slate-100 col-span-9 overflow-y-auto h-screen">
+            <div
+                class="py-12 bg-slate-100 col-span-9 lg:col-span-7 overflow-y-auto h-screen"
+            >
                 <div class="max-w-full mx-auto sm:px-6 lg:px-8">
                     <div class="flex justify-between gap-6">
                         <div>
@@ -134,7 +136,9 @@ onMounted(() => {
                     </div>
 
                     <!-- Categories Card -->
-                    <div class="grid grid-cols-5 gap-8 mt-12">
+                    <div
+                        class="grid grid-cols-5 lg:grid-cols-3 gap-8 lg:gap-3 mt-12"
+                    >
                         <div v-for="data in data.categories">
                             <button
                                 :value="data.name"
@@ -172,7 +176,9 @@ onMounted(() => {
                     </div>
                 </div>
             </div>
-            <div class="px-4 py-12 col-span-3 overflow-y-auto h-screen">
+            <div
+                class="px-4 py-12 col-span-3 lg:col-span-5 overflow-y-auto h-screen"
+            >
                 <Cart :carts="data.carts" :table_id="data.table_id" />
             </div>
         </div>

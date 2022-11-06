@@ -1,6 +1,6 @@
 <template>
     <AppLayout>
-        <div class="mx-auto max-w-7xl mb-12">
+        <div class="mx-auto max-w-7xl mb-12 lg:px-8">
             <div
                 class="max-w-full mx-auto my-8 text-2xl font-bold text-slate-700 uppercase tracking tracking-wider"
             >
