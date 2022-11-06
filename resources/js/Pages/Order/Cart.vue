@@ -37,12 +37,28 @@
                                 <DangerButton
                                     class="py-1 px-2"
                                     @click="addOrder(cart)"
+                                    v-if="cart.is_sent_to_kitchen == 0"
+                                    >+</DangerButton
+                                >
+                                <DangerButton
+                                    class="py-1 px-2"
+                                    @click="addOrder(cart)"
+                                    v-else
+                                    disabled
                                     >+</DangerButton
                                 >
                                 <span>{{ cart.quantity }}</span>
                                 <DangerButton
                                     class="py-1 px-2"
                                     @click="minusOrder(cart)"
+                                    v-if="cart.is_sent_to_kitchen == 0"
+                                    >-</DangerButton
+                                >
+                                <DangerButton
+                                    class="py-1 px-2"
+                                    @click="minusOrder(cart)"
+                                    v-else
+                                    disabled
                                     >-</DangerButton
                                 >
                             </div>
