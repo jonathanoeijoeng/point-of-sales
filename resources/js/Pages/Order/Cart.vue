@@ -11,7 +11,7 @@
                 <div
                     class="grid grid-cols-4 gap-4 mt-4"
                     v-for="cart in data.carts"
-                    key="data.id"
+                    :key="cart.id"
                 >
                     <img
                         v-if="cart.food_detail.photo"
@@ -28,7 +28,7 @@
                         <p class="font-bold text-lg leading-6 flex-1">
                             {{ cart.food_detail.name }}
                         </p>
-                        <div class="flex justify-between items-center mt-5">
+                        <div class="flex justify-between items-center mt-1">
                             <p class="text-orange-600 font-bold">
                                 IDR
                                 {{ Number(cart.sub_total).toLocaleString() }}
