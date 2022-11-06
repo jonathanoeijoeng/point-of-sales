@@ -26,7 +26,7 @@
                     />
                     <div class="flex flex-col col-span-3">
                         <p class="font-bold text-lg leading-6 flex-1">
-                            {{ cart.name }}
+                            {{ cart.food_detail.name }}
                         </p>
                         <div class="flex justify-between items-center mt-5">
                             <p class="text-orange-600 font-bold">
@@ -63,7 +63,11 @@
                                 >
                             </div>
                         </div>
-                        <div class="mt-3" @click="addNoteDisc(cart)">
+                        <div
+                            class="mt-3"
+                            @click="addNoteDisc(cart)"
+                            v-if="cart.is_sent_to_kitchen == 0"
+                        >
                             <p class="text-sm cursor-pointer">
                                 Note:
                                 <span class="text-slate-600">{{
@@ -71,6 +75,23 @@
                                 }}</span>
                             </p>
                             <p class="text-sm cursor-pointer">
+                                Disc:
+                                <span class="text-slate-600"
+                                    >{{ cart.discount }} %</span
+                                >
+                            </p>
+                        </div>
+                        <div class="mt-3" v-else>
+                            <p class="text-sm">
+                                Note:
+                                <span class="text-slate-400">{{
+                                    cart.notes
+                                }}</span>
+                            </p>
+                            <p
+                                class="text-sm cursor-pointer"
+                                @click="addNoteDisc(cart)"
+                            >
                                 Disc:
                                 <span class="text-slate-600"
                                     >{{ cart.discount }} %</span
@@ -220,6 +241,14 @@
                 v-model="modal.notes"
                 class="w-full border border-slate-300 rounded-md p-2"
                 rows="3"
+                v-if="modal.check == 0"
+            ></textarea>
+            <textarea
+                v-model="modal.notes"
+                class="w-full border border-slate-300 rounded-md p-2 bg-slate-100"
+                rows="3"
+                v-else
+                disabled
             ></textarea>
             <InputLabel for="notes" value="Discount (%)" class="mt-3" />
             <TextInput
@@ -362,6 +391,7 @@ const addNoteDisc = (cart) => {
     modal.notes = cart.notes;
     modal.id = cart.id;
     modal.discount = cart.discount;
+    modal.check = cart.is_sent_to_kitchen;
 };
 
 const submit = () => {
