@@ -1,6 +1,6 @@
 <template>
     <AppLayout title="Kitchen Order List">
-        <div class="mx-6 my-12 border border-slate-300 rounded-lg">
+        <div class="mx-6 mt-6 mb-12 border border-slate-300 rounded-lg">
             <div
                 class="text-xl p-4 font-bold uppercase tracking-wider bg-slate-300 rounded-t-lg"
             >
@@ -96,7 +96,9 @@
                                 colspan="7"
                                 class="py-8 text-center border border-slate-300"
                             >
-                                <p class="text-xl">All Done! Great Job!</p>
+                                <div class="text-xl flex justify-center">
+                                    <img src="/img/giphy.gif" alt="" />
+                                </div>
                             </td>
                         </tr>
                     </tbody>

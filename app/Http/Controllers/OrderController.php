@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use App\Events\OrderProcessed;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class OrderController extends Controller
 {
@@ -78,9 +79,12 @@ class OrderController extends Controller
             Cart::create([
                 'food_detail_id' => $request->data['id'],
                 'quantity' => 1,
+                'price' => $food->price,
                 'is_checkout' => false,
                 'sub_total' => $food->price,
                 'after_disc' => $food->price,
+                'tax' => $food->price * 0.1,
+                'total' => $food->price * 1.1,
                 'table_id' => $request->data['table_id'],
                 'user_id' => Auth::user()->id,
             ]);
@@ -96,7 +100,11 @@ class OrderController extends Controller
             $cart->update([
                 'quantity' => $request->data['quantity'],
                 'sub_total' => $price * $request->data['quantity'],
+                'discount' => $request->data['discount'],
+                'discount_value' => $request->data['discount'] * $price * $request->data['quantity'] / 100,
                 'after_disc' => $price * $request->data['quantity'],
+                'tax' => $price * $request->data['quantity'] * 0.1,
+                'total' => $price * $request->data['quantity'] * 1.1,
             ]);
         } else {
             $cart->delete();
@@ -111,7 +119,10 @@ class OrderController extends Controller
         $cart->update([
             'notes' => $request->data['notes'],
             'discount' => $request->data['discount'],
+            'discount_value' => $request->data['discount'] * $cart->price * $cart->quantity / 100,
             'after_disc' => $cart->quantity * $cart->food_detail->price * (1 - $request->data['discount'] / 100),
+            'tax' => $cart->quantity * $cart->food_detail->price * (1 - $request->data['discount'] / 100) * 0.1,
+            'total' => $cart->quantity * $cart->food_detail->price * (1 - $request->data['discount'] / 100) * 1.1,
         ]);
     }
 
@@ -126,6 +137,7 @@ class OrderController extends Controller
             $cart->update([
                 'is_checkout' => true,
                 'invoice_no' => $invoice_no,
+                'time_checkout' => now(),
             ]);
         }
 
@@ -186,7 +198,7 @@ class OrderController extends Controller
 
         broadcast(new OrderProcessed($cart));
 
-        return redirect()->route('kitchen')->with([
+        return redirect()->route('kitchen', ['table_id' => $request->table_id])->with([
             'flash' => [
                 'title' => '<strong>Success!</strong>',
                 'html' => 'Order <b>' . $request->food_detail['name'] . '</b> processed!',
@@ -206,13 +218,43 @@ class OrderController extends Controller
 
         broadcast(new OrderDone($cart));
 
-        return redirect()->route('kitchen')->with([
+        return redirect()->route('kitchen', ['table_id' => $request->table_id])->with([
             'flash' => [
                 'title' => '<strong>Success!</strong>',
                 'html' => 'Order done!',
                 'type' => 'success',
                 'toast' => true,
             ],
+        ]);
+    }
+
+    public function invoice(Request $request)
+    {
+        $invoices = Cart::with('table')
+            ->select('invoice_no', 'table_id', DB::raw('sum(total) as total'))
+            ->where('is_checkout', true)
+            // ->where('invoice_no', 'like', '%' . $request->data['invoice_no'] . '%')
+            ->orderBy('created_at', 'desc')
+            ->groupBy('invoice_no')
+            ->get();
+
+        if ($request->invoice_no) {
+            $details = Cart::with('food_detail', 'table')
+                ->where('invoice_no', 'like', '%' . $request->invoice_no . '%')
+                ->get();
+            $invoice = Cart::with('table')
+                ->select('invoice_no', 'table_id', DB::raw('sum(sub_total) as sub_total'), DB::raw('sum(discount_value) as discount'), DB::raw('sum(after_disc) as after_disc'), DB::raw('sum(after_disc) as after_disc'), DB::raw('sum(tax) as tax'), DB::raw('sum(total) as total'))
+                ->where('invoice_no', 'like', '%' . $request->invoice_no . '%')
+                ->first();
+        } else {
+            $details = null;
+            $invoice = null;
+        }
+
+        return inertia('Invoice', [
+            'invoices' => $invoices,
+            'details' => $details,
+            'invoice_detail' => $invoice,
         ]);
     }
 }

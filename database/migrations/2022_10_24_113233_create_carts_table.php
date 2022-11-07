@@ -18,10 +18,14 @@ return new class extends Migration
             $table->foreignId('user_id');
             $table->foreignId('table_id');
             $table->foreignId('food_detail_id');
+            $table->decimal('price', 20, 0);
             $table->integer('quantity');
             $table->decimal('discount', 4, 1)->default(0);
+            $table->decimal('discount_value', 20, 0)->default(0);
             $table->decimal('sub_total', 20, 0);
             $table->decimal('after_disc', 20, 0);
+            $table->decimal('tax', 20, 0);
+            $table->decimal('total', 20, 0);
             $table->text('notes')->nullable();
             $table->boolean('is_sent_to_kitchen')->default(false);
             $table->timestamp('time_sent_to_kitchen')->nullable();

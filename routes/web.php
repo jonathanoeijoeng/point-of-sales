@@ -47,6 +47,8 @@ Route::middleware([
     Route::post('/sent_to_kitchen', [OrderController::class, 'sent_to_kitchen'])->name('order.sent_to_kitchen');
     Route::post('/process', [OrderController::class, 'process'])->name('order.process');
     Route::post('/done', [OrderController::class, 'done'])->name('order.done');
+    Route::get('/invoice', [OrderController::class, 'invoice'])->name('order.invoice')->middleware('permission:view invoice');
+    Route::get('/invoice/detail', [OrderController::class, 'invoice_detail'])->name('invoice.detail');
     Route::any('/settings', [SettingController::class, 'index'])->name('settings')->middleware('permission:view settings');
     Route::post('/settings/recommended', [SettingController::class, 'recommended'])->name('recommended');
     Route::post('/settings/favourite', [SettingController::class, 'favourite'])->name('favourite');

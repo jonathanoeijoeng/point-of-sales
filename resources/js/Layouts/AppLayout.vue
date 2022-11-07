@@ -89,6 +89,17 @@ const logout = () => {
                                     Kitchen
                                 </NavLink>
                                 <NavLink
+                                    :href="route('order.invoice')"
+                                    :active="route().current('order.invoice')"
+                                    v-if="
+                                        $page.props.user.permissions.includes(
+                                            'view invoice'
+                                        )
+                                    "
+                                >
+                                    Invoice
+                                </NavLink>
+                                <NavLink
                                     :href="route('settings')"
                                     :active="route().current('settings')"
                                     v-if="

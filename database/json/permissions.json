@@ -19,5 +19,12 @@
         "guard_name": "web",
         "created_at": "2022-10-25 16:57:44",
         "updated_at": "2022-10-25 16:57:44"
+    },
+    {
+        "id": 4,
+        "name": "view invoice",
+        "guard_name": "web",
+        "created_at": "2022-10-25 16:57:44",
+        "updated_at": "2022-10-25 16:57:44"
     }
 ]
