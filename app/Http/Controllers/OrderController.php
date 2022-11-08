@@ -179,7 +179,8 @@ class OrderController extends Controller
     public function checkout_success(Request $request)
     {
         $data = $request->all();
-        return inertia('Success', [
+
+        return inertia('Invoice/Success', [
             'data' => $data,
         ]);
     }
