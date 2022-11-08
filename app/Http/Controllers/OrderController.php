@@ -176,14 +176,11 @@ class OrderController extends Controller
         ]);
     }
 
-    public function checked_success(Request $request)
+    public function checkout_success(Request $request)
     {
-        return inertia('Checkout')->with([
-            'flash' => [
-                'title' => '<strong>Success!</strong>',
-                'text' => 'Payment Success',
-                'type' => 'success',
-            ],
+        $data = $request->all();
+        return inertia('Success', [
+            'data' => $data,
         ]);
     }
 
