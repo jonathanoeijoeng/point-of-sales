@@ -136,7 +136,7 @@ class OrderController extends Controller
             ->where('table_id', $request->data['table_id'])
             ->where('is_checkout', false)
             ->get();
-        $invoice_no = 'INV-' . date('Ymd') . '-' . str_pad(Cart::whereDate('created_at', date('Y-m-d'))->count() + 1, 3, '0', STR_PAD_LEFT);
+        $invoice_no = 'INV-' . date('Ymd-his') . '-' . str_pad(Cart::whereDate('created_at', date('Y-m-d'))->count() + 1, 3, '0', STR_PAD_LEFT);
 
         foreach ($carts as $cart) {
             $cart->update([
