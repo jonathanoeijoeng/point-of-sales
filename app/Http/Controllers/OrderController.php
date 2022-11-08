@@ -187,7 +187,7 @@ class OrderController extends Controller
         $invoice->time_paid = now();
         $invoice->save();
 
-        return inertia('Tables');
+        return Redirect::route('table');
     }
 
     public function kitchen()
