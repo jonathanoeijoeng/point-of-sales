@@ -164,6 +164,9 @@ class OrderController extends Controller
                 'order_id' => $invoice_no,
                 'gross_amount' => $invoice->total,
             ),
+            'customer_details' => array(
+                'table' => $request->data['table_id'],
+            ),
         );
 
         $snapToken = \Midtrans\Snap::getSnapToken($params);
@@ -179,10 +182,12 @@ class OrderController extends Controller
     public function checkout_success(Request $request)
     {
         $data = $request->all();
+        $invoice = Cart::with('table')->where('invoice_no', $data['order_id'])->first();
+        $invoice->is_paid = true;
+        $invoice->time_paid = now();
+        $invoice->save();
 
-        return inertia('Invoice/Success', [
-            'data' => $data,
-        ]);
+        return inertia('Tables');
     }
 
     public function kitchen()

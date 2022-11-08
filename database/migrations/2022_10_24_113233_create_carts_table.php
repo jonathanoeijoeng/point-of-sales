@@ -35,6 +35,8 @@ return new class extends Migration
             $table->timestamp('time_done')->nullable();
             $table->boolean('is_checkout')->default(false);
             $table->timestamp('time_checkout')->nullable();
+            $table->boolean('is_paid')->default(false);
+            $table->timestamp('time_paid')->nullable();
             $table->string('invoice_no')->nullable();
             $table->timestamps();
         });

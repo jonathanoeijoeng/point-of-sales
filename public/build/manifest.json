@@ -711,13 +711,13 @@
       "resources/js/app.js"
     ]
   },
-  "resources/js/Pages/Order/Cart.css": {
-    "file": "assets/Cart.127dbdf1.css",
-    "src": "resources/js/Pages/Order/Cart.css"
-  },
   "resources/js/Pages/Tables.css": {
     "file": "assets/Tables.927602ff.css",
     "src": "resources/js/Pages/Tables.css"
+  },
+  "resources/js/Pages/Order/Cart.css": {
+    "file": "assets/Cart.127dbdf1.css",
+    "src": "resources/js/Pages/Order/Cart.css"
   },
   "filepond-plugin-image-preview.css": {
     "file": "assets/filepond-plugin-image-preview.b3cd1b18.css",
