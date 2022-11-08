@@ -11,6 +11,11 @@
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
 
+        <!-- Midtrans -->
+        <script type="text/javascript"
+        src="https://app.sandbox.midtrans.com/snap/snap.js"
+        data-client-key="SB-Mid-client-DDB9oITN-eR6tZ7F"></script>
+
         <!-- Scripts -->
         @routes
         @vite('resources/js/app.js')

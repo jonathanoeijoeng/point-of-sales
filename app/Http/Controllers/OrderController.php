@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use Midtrans\Config;
 use App\Models\Table;
 use App\Models\Category;
 use App\Events\OrderDone;
@@ -13,6 +14,7 @@ use App\Events\OrderProcessed;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+
 
 class OrderController extends Controller
 {
@@ -74,6 +76,10 @@ class OrderController extends Controller
 
         if ($duplicate) {
             $duplicate->quantity++;
+            $duplicate->sub_total = $duplicate->quantity * $duplicate->price;
+            $duplicate->after_disc = $duplicate->sub_total - $duplicate->discount_value;
+            $duplicate->tax = $duplicate->after_disc * 0.1;
+            $duplicate->total = $duplicate->after_disc * 1.1;
             $duplicate->save();
         } else {
             Cart::create([
@@ -100,9 +106,7 @@ class OrderController extends Controller
             $cart->update([
                 'quantity' => $request->data['quantity'],
                 'sub_total' => $price * $request->data['quantity'],
-                'discount' => $request->data['discount'],
-                'discount_value' => $request->data['discount'] * $price * $request->data['quantity'] / 100,
-                'after_disc' => $price * $request->data['quantity'],
+                'after_disc' => $price - $cart->discount_value,
                 'tax' => $price * $request->data['quantity'] * 0.1,
                 'total' => $price * $request->data['quantity'] * 1.1,
             ]);
@@ -128,7 +132,8 @@ class OrderController extends Controller
 
     public function checkout(Request $request)
     {
-        $carts = Cart::where('table_id', $request->data['table_id'])
+        $carts = Cart::with('food_detail', 'table')
+            ->where('table_id', $request->data['table_id'])
             ->where('is_checkout', false)
             ->get();
         $invoice_no = 'INV-' . date('Ymd') . '-' . str_pad(Cart::whereDate('created_at', date('Y-m-d'))->count() + 1, 3, '0', STR_PAD_LEFT);
@@ -141,10 +146,42 @@ class OrderController extends Controller
             ]);
         }
 
-        return redirect()->route('order', ['table_id' => $request->data['table_id']])->with([
+        $invoice = Cart::with('table')->where('invoice_no', $invoice_no)->first();
+
+        // Midtrans
+
+        // Set your Merchant Server Key
+        \Midtrans\Config::$serverKey = 'SB-Mid-server-hl5YDnnLwRZiJls3sE70TmdW';
+        // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
+        \Midtrans\Config::$isProduction = false;
+        // Set sanitization on (default)
+        \Midtrans\Config::$isSanitized = true;
+        // Set 3DS transaction for credit card to true
+        \Midtrans\Config::$is3ds = true;
+
+        $params = array(
+            'transaction_details' => array(
+                'order_id' => $invoice_no,
+                'gross_amount' => $invoice->total,
+            ),
+        );
+
+        $snapToken = \Midtrans\Snap::getSnapToken($params);
+
+        return inertia('Checkout', [
+            'carts' => $carts,
+            'table_id' => $request->data['table_id'],
+            'invoice' => $invoice,
+            'snapToken' => $snapToken,
+        ]);
+    }
+
+    public function checked_success(Request $request)
+    {
+        return inertia('Checkout')->with([
             'flash' => [
                 'title' => '<strong>Success!</strong>',
-                'html' => 'Checkout success! <br>Invoce No: ' . $invoice_no,
+                'text' => 'Payment Success',
                 'type' => 'success',
             ],
         ]);

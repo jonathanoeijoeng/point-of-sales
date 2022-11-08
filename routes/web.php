@@ -41,7 +41,8 @@ Route::middleware([
     Route::get('/order', [OrderController::class, 'order'])->name('order');
     Route::post('/add-order', [OrderController::class, 'add'])->name('order.add');
     Route::post('/change-order', [OrderController::class, 'change'])->name('order.change');
-    Route::post('/checkout', [OrderController::class, 'checkout'])->name('order.checkout');
+    Route::any('/checkout', [OrderController::class, 'checkout'])->name('order.checkout');
+    Route::any('/checkout-success', [OrderController::class, 'checkout_success'])->name('checkout.success');
     Route::post('/note', [OrderController::class, 'note'])->name('order.note');
     Route::get('/kitchen', [OrderController::class, 'kitchen'])->name('kitchen')->middleware('permission:view kitchen');
     Route::post('/sent_to_kitchen', [OrderController::class, 'sent_to_kitchen'])->name('order.sent_to_kitchen');

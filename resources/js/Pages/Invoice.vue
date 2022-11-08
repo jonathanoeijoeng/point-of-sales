@@ -88,7 +88,7 @@
                         <div class="text-sm">
                             Date:
                             <span>{{
-                                dayjs(data.invoice_detail.updated_at).format(
+                                dayjs(data.invoice_detail.time_checkout).format(
                                     "DD MMMM YYYY"
                                 )
                             }}</span>
@@ -118,18 +118,13 @@
                                 </td>
                                 <td class="py-1 px-4 text-right">
                                     Rp.
-                                    {{
-                                        Number(
-                                            detail.food_detail.price
-                                        ).toLocaleString()
-                                    }}
+                                    {{ Number(detail.price).toLocaleString() }}
                                 </td>
                                 <td class="py-1 pl-4 text-right">
                                     Rp.
                                     {{
                                         Number(
-                                            detail.food_detail.price *
-                                                detail.quantity
+                                            detail.sub_total
                                         ).toLocaleString()
                                     }}
                                 </td>
@@ -209,7 +204,7 @@
                     <hr class="mt-3" />
                     <div class="mt-3">
                         <div class="text-sm text-center">
-                            ----- END BILL -----
+                            ----- END of DOCUMENT -----
                         </div>
                     </div>
                 </div>

@@ -90,8 +90,7 @@ const submit = () => {
                         <h1
                             class="text-4xl tracking-tight font-black text-slate-900 dark:text-slate-300 sm:text-5xl md:text-5xl"
                         >
-                            <span class="block md:inline">Point of Sales </span
-                            ><br />
+                            <span class="block md:inline">Point of Sales </span>
                             <span
                                 class="block text-orange-600 md:inline font-normal"
                                 >Management</span
