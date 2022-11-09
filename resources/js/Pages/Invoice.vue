@@ -31,6 +31,12 @@
                                 >
                                     <td class="py-3 px-2">
                                         {{ invoice.invoice_no }}
+                                        <span>&nbsp;&nbsp;</span>
+                                        <span
+                                            class="px-2 py-1 bg-red-600 text-red-50 rounded-lg text-xs"
+                                            v-if="$page.props.flash"
+                                            >New</span
+                                        >
                                     </td>
                                     <td class="py-3 px-2">
                                         {{
