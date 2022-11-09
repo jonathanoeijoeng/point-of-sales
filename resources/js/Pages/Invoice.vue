@@ -5,7 +5,6 @@
                 <div class="border border-slate-300 rounded-lg">
                     <div class="text-xl bg-slate-300 p-4 font-bold">
                         Invoice List
-                        {{ data.invoices }}
                     </div>
                     <div>
                         <table
