@@ -1,1 +1,0 @@
-import{_ as e}from"./AppLayout.5160a2b8.js";import{o as s,c,w as o,g as r,t as n}from"./app.26abd7f4.js";import"./_plugin-vue_export-helper.cdc0426e.js";const u={__name:"Success",props:{data:Object},setup(t){const a=t;return(_,p)=>(s(),c(e,null,{default:o(()=>[r(n(a.data),1)]),_:1}))}};export{u as default};

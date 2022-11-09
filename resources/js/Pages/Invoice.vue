@@ -1,7 +1,7 @@
 <template>
     <AppLayout>
-        <div class="grid xl:grid-cols-2 lg:grid-cols-1">
-            <div class="w-full sm:px-6 lg:px-8 mt-6">
+        <div class="grid xl:grid-cols-12 lg:grid-cols-1 gap-1">
+            <div class="w-full sm:px-6 lg:px-8 mt-6 col-span-7">
                 <div class="border border-slate-300 rounded-lg">
                     <div class="text-xl bg-slate-300 p-4 font-bold">
                         Invoice List
@@ -12,13 +12,15 @@
                         >
                             <thead>
                                 <tr
-                                    class="bg-slate-200 font-semibold uppercase tracking-widest"
+                                    class="bg-slate-200 font-semibold uppercase tracking-widest text-xs"
                                 >
-                                    <th class="py-3 px-4">Invoice No</th>
-                                    <th class="py-3 px-4">Date</th>
-                                    <th class="py-3 px-4">Table</th>
+                                    <th class="py-3 px-2">Invoice No</th>
+                                    <th class="py-3 px-2">Date</th>
+                                    <th class="py-3 px-2">Table</th>
                                     <th class="py-3 pr-12 text-right">Total</th>
-                                    <th class="py-3 px-4">Action</th>
+                                    <th class="py-3 px-2">Status</th>
+                                    <th class="py-3 px-2">Paid Time</th>
+                                    <th class="py-3 px-2">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -27,17 +29,17 @@
                                     v-for="invoice in data.invoices"
                                     :key="invoice.id"
                                 >
-                                    <td class="py-3 px-4">
+                                    <td class="py-3 px-2">
                                         {{ invoice.invoice_no }}
                                     </td>
-                                    <td class="py-3 px-4">
+                                    <td class="py-3 px-2">
                                         {{
                                             dayjs(invoice.updated_at).format(
                                                 "DD - MMM - YYYY"
                                             )
                                         }}
                                     </td>
-                                    <td class="py-3 px-4">
+                                    <td class="py-3 px-2">
                                         {{ invoice.table.name }}
                                     </td>
                                     <td class="py-3 pr-12 text-right">
@@ -47,7 +49,29 @@
                                             ).toLocaleString()
                                         }}
                                     </td>
-                                    <td class="py-3 px-4 flex gap-4">
+                                    <td class="py-3 px-2 text-right">
+                                        <span
+                                            v-if="invoice.is_paid == 1"
+                                            class="text-xs bg-green-500 text-white px-2 py-1 rounded-full"
+                                            >Paid</span
+                                        >
+                                        <span
+                                            v-else
+                                            class="text-xs bg-red-500 text-white px-2 py-1 rounded-full"
+                                            >Unpaid</span
+                                        >
+                                    </td>
+                                    <td class="py-3 px-2">
+                                        <div v-if="invoice.time_paid">
+                                            {{
+                                                dayjs(invoice.time_paid).format(
+                                                    "DD - MMM - YYYY"
+                                                )
+                                            }}
+                                        </div>
+                                        <div v-else class="text-center">-</div>
+                                    </td>
+                                    <td class="py-3 px-2 flex gap-4">
                                         <PrimaryButton
                                             @click="
                                                 viewInvoice(invoice.invoice_no)
@@ -61,7 +85,7 @@
                     </div>
                 </div>
             </div>
-            <div v-if="data.details">
+            <div v-if="data.details" class="col-span-5 mr-6">
                 <div class="gap-3 flex mx-auto mt-4 max-w-xl">
                     <PrimaryButton class="text-sm">Print</PrimaryButton>
                     <DangerButton class="text-sm">Cancel</DangerButton>
