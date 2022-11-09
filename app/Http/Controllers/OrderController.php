@@ -194,6 +194,7 @@ class OrderController extends Controller
                 'type' => 'success',
                 'toast' => true,
             ],
+            'invoice_no' => $data['order_id'],
         ]);
     }
 

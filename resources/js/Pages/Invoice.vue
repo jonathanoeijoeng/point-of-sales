@@ -34,7 +34,10 @@
                                         <span>&nbsp;&nbsp;</span>
                                         <span
                                             class="px-2 py-1 bg-red-600 text-red-50 rounded-lg text-xs"
-                                            v-if="$page.props.flash"
+                                            v-if="
+                                                $page.props.invoice_no ==
+                                                invoice.invoice_no
+                                            "
                                             >New</span
                                         >
                                     </td>

@@ -45,6 +45,9 @@ class HandleInertiaRequests extends Middleware
 
             'user.permissions' => Auth::user() ? Auth::user()->getPermissionsViaRoles()->pluck('name') : [],
             'csrf_token' => csrf_token(),
+            'invoice_no' => function () {
+                return Session::get('invoice_no');
+            },
         ]);
     }
 }
