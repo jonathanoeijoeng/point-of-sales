@@ -5,6 +5,7 @@
                 <div class="border border-slate-300 rounded-lg">
                     <div class="text-xl bg-slate-300 p-4 font-bold">
                         Invoice List
+                        {{ data.invoices }}
                     </div>
                     <div>
                         <table
@@ -49,7 +50,7 @@
                                             ).toLocaleString()
                                         }}
                                     </td>
-                                    <td class="py-3 px-2 text-right">
+                                    <td class="py-3 px-2">
                                         <span
                                             v-if="invoice.is_paid == 1"
                                             class="text-xs bg-green-500 text-white px-2 py-1 rounded-full"
@@ -58,7 +59,7 @@
                                         <span
                                             v-else
                                             class="text-xs bg-red-500 text-white px-2 py-1 rounded-full"
-                                            >Unpaid</span
+                                            >{{ invoice.is_paid }}</span
                                         >
                                     </td>
                                     <td class="py-3 px-2">

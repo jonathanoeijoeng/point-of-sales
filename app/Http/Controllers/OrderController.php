@@ -271,7 +271,7 @@ class OrderController extends Controller
     public function invoice(Request $request)
     {
         $invoices = Cart::with('table')
-            ->select('invoice_no', 'table_id', DB::raw('sum(total) as total'))
+            ->select('*', DB::raw('sum(total) as total'))
             ->where('is_checkout', true)
             // ->where('invoice_no', 'like', '%' . $request->data['invoice_no'] . '%')
             ->orderBy('created_at', 'desc')
