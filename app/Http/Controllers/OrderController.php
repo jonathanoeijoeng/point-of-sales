@@ -187,7 +187,14 @@ class OrderController extends Controller
         $invoice->time_paid = now();
         $invoice->save();
 
-        return Redirect::route('order.invoice');
+        return Redirect::route('order.invoice')->with([
+            'flash' => [
+                'title' => 'Success',
+                'message' => 'Payment success',
+                'type' => 'success',
+                'toast' => true,
+            ],
+        ]);
     }
 
     public function kitchen()
